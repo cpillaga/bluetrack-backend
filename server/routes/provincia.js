@@ -9,8 +9,9 @@ const { verificaToken } = require('../middlewares/autenticacion');
 
 app.use(cors({ origin: '*' }));
 
-app.get('/province', verificaToken, function(req, res) {
+app.get('/province', function(req, res) {
     Province.find({})
+        .sort('descripcion')
         .exec((err, province) => {
             if (err) {
                 return res.status(400).json({
@@ -26,7 +27,7 @@ app.get('/province', verificaToken, function(req, res) {
         });
 });
 
-app.get('/province/:description', verificaToken, function(req, res) {
+app.get('/province/:description', function(req, res) {
     let description = req.params.description;
 
     Province.find({ descripcion: description })

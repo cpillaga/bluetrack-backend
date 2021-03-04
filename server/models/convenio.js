@@ -16,6 +16,10 @@ let agreementSchema = new Schema({
         ref: 'Canton',
         required: [true, 'El cantón es obligatorio']
     },
+    img: {
+        type: String,
+        required: [true, 'La imagen es obligatoria']
+    },
     branchOffice: {
         type: Schema.Types.ObjectId,
         ref: 'BranchOffice',

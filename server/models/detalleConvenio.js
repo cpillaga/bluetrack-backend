@@ -14,11 +14,6 @@ let agreeDetailSchema = new Schema({
         type: Number,
         required: [true, 'El total es obligatorio']
     },
-    img: {
-        type: String,
-        required: false
-            // required: [true, 'El total es obligatorio']
-    },
     agreement: {
         type: Schema.Types.ObjectId,
         ref: 'Agreement',

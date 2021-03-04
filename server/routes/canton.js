@@ -9,7 +9,7 @@ const { verificaToken } = require('../middlewares/autenticacion');
 
 app.use(cors({ origin: '*' }));
 
-app.get('/canton/:idProv', verificaToken, function(req, res) {
+app.get('/canton/:idProv', function(req, res) {
     let id = req.params.idProv;
 
     Canton.find({ province: id })
