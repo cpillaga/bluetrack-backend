@@ -74,7 +74,7 @@ app.get('/client', verificaToken, function(req, res) {
         });
 });
 
-app.post('/client', verificaToken, function(req, res) {
+app.post('/client', function(req, res) {
     let body = req.body;
 
     let client = new Client({
