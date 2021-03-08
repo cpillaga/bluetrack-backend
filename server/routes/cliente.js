@@ -74,6 +74,26 @@ app.get('/client', verificaToken, function(req, res) {
         });
 });
 
+app.get('/client/searchMail/:mail', verificaToken, function(req, res) {
+    let mail = req.params.mail;
+
+    Client.find({ email: mail })
+        .populate('canton')
+        .exec((err, client) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                client
+            });
+        });
+});
+
 app.post('/client', function(req, res) {
     let body = req.body;
 

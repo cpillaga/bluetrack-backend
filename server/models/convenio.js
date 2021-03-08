@@ -11,7 +11,12 @@ let agreementSchema = new Schema({
         type: String,
         required: [true, 'El precio es obligatorio']
     },
-    canton: {
+    cantonOrigen: {
+        type: Schema.Types.ObjectId,
+        ref: 'Canton',
+        required: [true, 'El cantón es obligatorio']
+    },
+    cantonDestino: {
         type: Schema.Types.ObjectId,
         ref: 'Canton',
         required: [true, 'El cantón es obligatorio']
