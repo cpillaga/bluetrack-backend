@@ -32,6 +32,31 @@ app.get('/agreement/:idSuc', verificaToken, (req, res) => {
         });
 });
 
+app.get('/agreement/:idClient/:idCantOrig/:idCantDest', verificaToken, (req, res) => {
+    let idCli = req.params.idClient;
+    let idCantO = req.params.idCantOrig;
+    let idCantD = req.params.idCantDest;
+
+    Agreement.find({ client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD }) //Lo que esta dentro de apostrofe son campos a mostrar
+        .populate('cantonOrigen')
+        .populate('cantonDestino')
+        .populate('client')
+        .populate('branchOffice')
+        .exec((err, agreement) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                agreement
+            });
+        });
+});
+
 app.post('/agreement', verificaToken, function(req, res) {
     let body = req.body;
 
@@ -59,6 +84,8 @@ app.post('/agreement', verificaToken, function(req, res) {
         });
     });
 });
+
+
 
 app.put('/agreement/:id', verificaToken, function(req, res) {
     let id = req.params.id;
