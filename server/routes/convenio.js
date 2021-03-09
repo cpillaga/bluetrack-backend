@@ -41,7 +41,12 @@ app.get('/agreement/:idClient/:idCantOrig/:idCantDest', verificaToken, (req, res
         .populate('cantonOrigen')
         .populate('cantonDestino')
         .populate('client')
-        .populate('branchOffice')
+        .populate({
+            path: 'branchOffice',
+            populate: {
+                path: 'business'
+            }
+        })
         .exec((err, agreement) => {
             if (err) {
                 return res.status(400).json({
