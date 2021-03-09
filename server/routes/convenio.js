@@ -13,7 +13,8 @@ app.get('/agreement/:idSuc', verificaToken, (req, res) => {
     let id = req.params.idSuc;
 
     Agreement.find({ branchOffice: id }) //Lo que esta dentro de apostrofe son campos a mostrar
-        .populate('canton')
+        .populate('cantonOrigen')
+        .populate('cantonDestino')
         .populate('client')
         .populate('branchOffice')
         .exec((err, agreement) => {
