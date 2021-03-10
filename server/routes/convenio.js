@@ -109,7 +109,7 @@ app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken,
 
                             res.json({
                                 ok: true,
-                                convenios: convenios[cont]
+                                agreement
                             });
                         }
                     });
