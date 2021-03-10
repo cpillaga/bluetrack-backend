@@ -100,10 +100,7 @@ app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken,
                             });
                         }
 
-
                         if (agreement.length > 0) {
-                            console.log(agreement);
-
                             convenios[cont] = agreement;
                             cont = cont + 1;
 
