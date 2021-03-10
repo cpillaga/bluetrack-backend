@@ -36,10 +36,19 @@ let shippAgreementSchema = new Schema({
         type: String,
         required: [true, 'El número de guia es obligatorio']
     },
+    type: {
+        type: String,
+        required: [true, 'El tipo es obligatorio']
+    },
     tracking: {
         type: String,
         unique: true,
         required: [true, 'El número de rastreo es obligatorio']
+    },
+    carrier: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'El destinatario es obligatorio']
     },
     branchOffice: {
         type: Schema.Types.ObjectId,

@@ -24,11 +24,6 @@ let agreeDetailSchema = new Schema({
         ref: 'ShippingAgreement',
         required: [true, 'El envío convenio es obligatorio']
     },
-    carrier: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: [true, 'El destinatario es obligatorio']
-    },
     receiver: {
         type: Schema.Types.ObjectId,
         ref: 'Receiver',

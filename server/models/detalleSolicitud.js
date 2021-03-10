@@ -29,11 +29,6 @@ let requestDetailSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Request',
         required: [true, 'La solicitud es obligatoria']
-    },
-    receiver: {
-        type: Schema.Types.ObjectId,
-        ref: 'Receiver',
-        required: [true, 'El destinatario es obligatorio']
     }
 });
 

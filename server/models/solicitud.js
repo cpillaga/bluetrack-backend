@@ -36,6 +36,10 @@ let requestSchema = new Schema({
         type: String,
         default: ''
     },
+    type: {
+        type: String,
+        required: [true, 'El tipo es obligatorio']
+    },
     client: {
         type: Schema.Types.ObjectId,
         ref: 'Client',
@@ -45,6 +49,11 @@ let requestSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'BranchOffice',
         required: [true, 'La sucursal es obligatorio']
+    },
+    receiver: {
+        type: Schema.Types.ObjectId,
+        ref: 'Receiver',
+        required: [true, 'El destinatario es obligatorio']
     }
 });
 

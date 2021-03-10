@@ -58,7 +58,6 @@ app.post('/client/login', function(req, res) {
 
 app.get('/client', verificaToken, function(req, res) {
     Client.find({})
-        .populate('canton')
         .exec((err, client) => {
             if (err) {
                 return res.status(400).json({
@@ -78,7 +77,6 @@ app.get('/client/searchMail/:mail', verificaToken, function(req, res) {
     let mail = req.params.mail;
 
     Client.find({ email: mail })
-        .populate('canton')
         .exec((err, client) => {
             if (err) {
                 return res.status(400).json({
@@ -105,7 +103,7 @@ app.post('/client', function(req, res) {
         email: body.email,
         user: body.user,
         password: bcrypt.hashSync(body.password, 10),
-        canton: body.canton
+        // canton: body.canton
     });
 
     client.save((err, clientDB) => {

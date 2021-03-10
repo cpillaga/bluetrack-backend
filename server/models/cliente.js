@@ -31,12 +31,12 @@ let clientSchema = new Schema({
     password: {
         type: String,
         required: [true, 'La contraseña es obligatoria']
-    },
-    canton: {
-        type: Schema.Types.ObjectId,
-        ref: 'Canton',
-        required: [true, 'El cantón es obligatorio']
     }
+    // canton: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Canton',
+    //     required: [true, 'El cantón es obligatorio']
+    // }
 });
 
 clientSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser unico' });
