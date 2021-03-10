@@ -28,7 +28,7 @@ app.get('/canton/:idProv', function(req, res) {
         });
 });
 
-app.get('/canton/:nombreCanton', function(req, res) {
+app.get('/canton/search/:nombreCanton', function(req, res) {
     let nombre = req.params.nombreCanton;
 
     Canton.find({ description: nombre })
