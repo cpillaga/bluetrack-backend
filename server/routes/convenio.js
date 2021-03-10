@@ -73,7 +73,7 @@ app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken,
 
     Canton.find({ province: idProvO })
         .populate('province')
-        .exec((err, cantonOrigen) => {
+        .exec((err, cantOrigen) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -81,8 +81,9 @@ app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken,
                 });
             }
 
-            for (let i = 0; i < cantonOrigen.length; i++) {
-                Agreement.find({ client: idCli, cantonOrigen: cantonOrigen[i], cantonDestino: idCantD }) //Lo que esta dentro de apostrofe son campos a mostrar
+            for (let i = 0; i < cantOrigen.length; i++) {
+                console.log(cantOrigen[i]);
+                Agreement.find({ client: idCli, cantonOrigen: cantOrigen[i], cantonDestino: idCantD }) //Lo que esta dentro de apostrofe son campos a mostrar
                     .populate('cantonOrigen')
                     .populate('cantonDestino')
                     .populate('client')
