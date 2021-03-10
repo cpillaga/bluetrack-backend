@@ -28,6 +28,25 @@ app.get('/canton/:idProv', function(req, res) {
         });
 });
 
+app.get('/canton/:nombreCanton', function(req, res) {
+    let nombre = req.params.nombreCanton;
+
+    Canton.find({ description: nombre })
+        .exec((err, canton) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                canton
+            });
+        });
+});
+
 app.post('/canton', verificaToken, function(req, res) {
     let body = req.body;
 
