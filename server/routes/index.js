@@ -10,5 +10,6 @@ app.use(require('./usuarios'));
 app.use(require('./cliente'));
 app.use(require('./convenio'));
 app.use(require('./destinatario'));
+app.use(require('./solicitud'));
 
 module.exports = app;
