@@ -6,6 +6,7 @@ const Agreement = require('../models/convenio');
 
 let app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
+const Canton = require('../models/canton');
 
 app.use(cors({ origin: '*' }));
 
@@ -61,6 +62,56 @@ app.get('/agreement/:idClient/:idCantOrig/:idCantDest', verificaToken, (req, res
             });
         });
 });
+
+
+app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken, (req, res) => {
+    let idCli = req.params.idClient;
+    let idProvO = req.params.idProvOrig;
+    let idCantD = req.params.idCantDest;
+    let convenios = [];
+    let cont = 0;
+
+    Canton.find({ province: idProvO })
+        .populate('province')
+        .exec((err, cantonOrigen) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            for (let i = 0; i < cantonOrigen.length; i++) {
+                Agreement.find({ client: idCli, cantonOrigen: cantonOrigen[i], cantonDestino: idCantD }) //Lo que esta dentro de apostrofe son campos a mostrar
+                    .populate('cantonOrigen')
+                    .populate('cantonDestino')
+                    .populate('client')
+                    .populate({
+                        path: 'branchOffice',
+                        populate: {
+                            path: 'business'
+                        }
+                    })
+                    .exec((err, agreement) => {
+                        if (err) {
+                            return res.status(400).json({
+                                ok: false,
+                                err
+                            });
+                        }
+
+                        convenios[cont] = agreement;
+                        cont = cont + 1;
+                    });
+            }
+
+            res.json({
+                ok: true,
+                convenios
+            });
+        });
+});
+
 
 app.post('/agreement', verificaToken, function(req, res) {
     let body = req.body;
