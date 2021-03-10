@@ -82,7 +82,6 @@ app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken,
             }
 
             for (let i = 0; i < cantOrigen.length; i++) {
-                console.log(cantOrigen[i]);
                 Agreement.find({ client: idCli, cantonOrigen: cantOrigen[i], cantonDestino: idCantD }) //Lo que esta dentro de apostrofe son campos a mostrar
                     .populate('cantonOrigen')
                     .populate('cantonDestino')
@@ -107,14 +106,16 @@ app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken,
 
                             convenios[cont] = agreement;
                             cont = cont + 1;
+
+                            res.json({
+                                ok: true,
+                                convenios: convenios[cont]
+                            });
                         }
                     });
             }
 
-            res.json({
-                ok: true,
-                convenios
-            });
+
         });
 });
 
