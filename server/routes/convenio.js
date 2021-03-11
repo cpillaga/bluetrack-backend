@@ -68,7 +68,7 @@ app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (
     let idCantO = req.params.idCantOrig;
     let idCantD = req.params.idCantDest;
 
-    Agreement.distinct('branchOfiice', { client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD })
+    Agreement.find({ client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD })
         .populate('cantonOrigen')
         .populate('cantonDestino')
         .populate('client')
@@ -88,7 +88,7 @@ app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (
 
             res.json({
                 ok: true,
-                agreement
+                agreement: agreement.indexOf(agreement.branchOffice)
             });
         });
 });
