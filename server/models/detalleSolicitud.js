@@ -22,8 +22,7 @@ let requestDetailSchema = new Schema({
     },
     img: {
         type: String,
-        required: false
-            // required: [true, 'El total es obligatorio']
+        required: [true, 'La imagen es obligatoria']
     },
     request: {
         type: Schema.Types.ObjectId,

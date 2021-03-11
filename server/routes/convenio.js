@@ -111,8 +111,6 @@ app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken,
                         }
                     });
             }
-
-
         });
 });
 

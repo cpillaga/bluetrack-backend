@@ -58,8 +58,16 @@ app.post('/request', verificaToken, function(req, res) {
     let body = req.body;
 
     let request = new Request({
-        description: body.descripcion,
-        province: body.provincia
+        date: body.date,
+        subtotal: body.subtotal,
+        iva: body.iva,
+        descuento: body.descuento,
+        ice: body.ice,
+        total: body.total,
+        type: body.type,
+        client: body.client,
+        branchOffice: body.branchOffice,
+        receiver: body.receiver
     });
 
     request.save((err, requestDB) => {
@@ -73,6 +81,39 @@ app.post('/request', verificaToken, function(req, res) {
         res.json({
             ok: true,
             request: requestDB
+        });
+    });
+});
+
+app.delete('/request/:id/:estado', verificaToken, function(req, res) {
+    let id = req.params.id;
+    let estado = req.params.estado;
+
+    let cambiaEstado = {
+        status: estado
+    };
+
+    //  Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
+    Request.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, requestBorrado) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!requestBorrado) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Solicitud no encontrada'
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            request: requestBorrado
         });
     });
 });

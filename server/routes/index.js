@@ -11,5 +11,6 @@ app.use(require('./cliente'));
 app.use(require('./convenio'));
 app.use(require('./destinatario'));
 app.use(require('./solicitud'));
+app.use(require('./detalleSolicitud'));
 
 module.exports = app;
