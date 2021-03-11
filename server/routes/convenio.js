@@ -86,9 +86,11 @@ app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (
                 });
             }
 
+            const edadesDistintas = [new Set(agreement.map(x => x.branchoffice))];
+
             res.json({
                 ok: true,
-                agreement: agreement.indexOf(agreement.branchOffice)
+                agreement: edadesDistintas
             });
         });
 });
