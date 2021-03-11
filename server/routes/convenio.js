@@ -68,7 +68,7 @@ app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (
     let idCantO = req.params.idCantOrig;
     let idCantD = req.params.idCantDest;
 
-    Agreement.find({ client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD })
+    Agreement.distinct('branchOfiice', { client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD })
         .populate('cantonOrigen')
         .populate('cantonDestino')
         .populate('client')
@@ -78,7 +78,6 @@ app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (
                 path: 'business'
             }
         })
-        .distinct('branchOffice ')
         .exec((err, agreement) => {
             if (err) {
                 return res.status(400).json({
