@@ -63,6 +63,36 @@ app.get('/agreement/:idClient/:idCantOrig/:idCantDest', verificaToken, (req, res
         });
 });
 
+app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (req, res) => {
+    let idCli = req.params.idClient;
+    let idCantO = req.params.idCantOrig;
+    let idCantD = req.params.idCantDest;
+
+    Agreement.find({ client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD })
+        .populate('cantonOrigen')
+        .populate('cantonDestino')
+        .populate('client')
+        .populate({
+            path: 'branchOffice',
+            populate: {
+                path: 'business'
+            }
+        })
+        .distinct('branchOffice ')
+        .exec((err, agreement) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                agreement
+            });
+        });
+});
 
 app.get('/agreement/provincia/:idClient/:idProvOrig/:idCantDest', verificaToken, (req, res) => {
     let idCli = req.params.idClient;
