@@ -3,6 +3,7 @@ const cors = require('cors');
 const _ = require('underscore');
 
 const Agreement = require('../models/convenio');
+const BranchOffice = require('../models/sucursal');
 
 let app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
@@ -68,7 +69,7 @@ app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (
     let idCantO = req.params.idCantOrig;
     let idCantD = req.params.idCantDest;
 
-    Agreement.find({ client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD })
+    Agreement.find({ client: idCli, cantonOrigen: idCantO, cantonDestino: idCantD }) //Lo que esta dentro de apostrofe son campos a mostrar
         .populate('cantonOrigen')
         .populate('cantonDestino')
         .populate('client')
@@ -86,10 +87,18 @@ app.get('/agreement/empresa/:idClient/:idCantOrig/:idCantDest', verificaToken, (
                 });
             }
 
+            let cont = 0;
+            let array = [];
+            for (let i = 0; i < agreement.length; i++) {
+                array[cont] = agreement[i].branchOffice;
+                cont = cont + 1;
+            }
+
+            let unicos = Array.from(new Set(array));
 
             res.json({
                 ok: true,
-                agreement
+                branchOffice: unicos
             });
         });
 });
