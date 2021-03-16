@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const http = require('http');
+const socketIO = require('socket.io');
 
 
 const app = express();
@@ -29,6 +30,10 @@ mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useCreateIndex: tru
     console.log('Base de Datos ONLINE');
 
 });
+
+//Esta es la comunicacion del BACKEND
+module.exports.io = socketIO(server);
+require('./sockets/socket');
 
 server.listen(process.env.PORT, () => {
     console.log('Escuchando puerto: ', process.env.PORT);
