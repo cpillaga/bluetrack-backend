@@ -16,14 +16,6 @@ let requestSchema = new Schema({
         type: Number,
         required: [true, 'El iva es obligatorio']
     },
-    descuento: {
-        type: Number,
-        required: [true, 'El descuento es obligatorio']
-    },
-    ice: {
-        type: Number,
-        required: [true, 'El ice es obligatorio']
-    },
     total: {
         type: Number,
         required: [true, 'El total es obligatorio']

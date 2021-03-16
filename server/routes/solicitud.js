@@ -61,8 +61,6 @@ app.post('/request', verificaToken, function(req, res) {
         date: body.date,
         subtotal: body.subtotal,
         iva: body.iva,
-        descuento: body.descuento,
-        ice: body.ice,
         total: body.total,
         type: body.type,
         client: body.client,
