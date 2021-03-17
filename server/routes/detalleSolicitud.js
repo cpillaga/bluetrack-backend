@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const RequestDetail = require('../models/solicitud');
+const RequestDetail = require('../models/detalleSolicitud');
 
 const app = express();
 
