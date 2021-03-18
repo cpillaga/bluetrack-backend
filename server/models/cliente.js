@@ -6,6 +6,7 @@ let Schema = mongoose.Schema;
 let clientSchema = new Schema({
     ciRuc: {
         type: String,
+        unique: true,
         required: [true, 'El ruc o cédula es obligatorio']
     },
     name: {
@@ -22,10 +23,12 @@ let clientSchema = new Schema({
     },
     email: {
         type: String,
+        unique: true,
         required: [true, 'El correo es obligatorio']
     },
     user: {
         type: String,
+        unique: true,
         required: [true, 'El usuario es obligatorio']
     },
     password: {
