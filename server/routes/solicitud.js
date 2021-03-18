@@ -15,12 +15,7 @@ app.get('/request/sucursal/:idSuc', function(req, res) {
 
     Request.find({ branchOffice: idSuc })
         .populate('branchOffice')
-        .populate({
-            path: 'client',
-            populate: {
-                path: 'canton'
-            }
-        })
+        .populate('client')
         .populate({
             path: 'receiver',
             populate: {
@@ -47,12 +42,7 @@ app.get('/request/cliente/:idCli', function(req, res) {
 
     Request.find({ client: idCli })
         .populate('branchOffice')
-        .populate({
-            path: 'client',
-            populate: {
-                path: 'canton'
-            }
-        })
+        .populate('client')
         .populate({
             path: 'receiver',
             populate: {
