@@ -55,9 +55,6 @@ app.get('/receiver/search/:name', function(req, res) {
 app.post('/receiver', verificaToken, function(req, res) {
     let body = req.body;
 
-    console.log("Entro a destinatario");
-    console.log(body);
-
     let receiver = new Receiver({
         ciRuc: body.ciRuc,
         name: body.name,
