@@ -13,6 +13,7 @@ app.get('/receiver/:idCli', verificaToken, (req, res) => {
     let id = req.params.idCli;
 
     Receiver.find({ client: id }) //Lo que esta dentro de apostrofe son campos a mostrar
+        .populate('canton')
         .exec((err, receiver) => {
             if (err) {
                 return res.status(400).json({
@@ -37,6 +38,7 @@ app.get('/receiver/search/:name', function(req, res) {
     let regex = new RegExp(nameB, 'i');
 
     Receiver.find({ name: regex })
+        .populate('canton')
         .exec((err, receiver) => {
             if (err) {
                 return res.status(400).json({
