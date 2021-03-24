@@ -32,7 +32,7 @@ app.get('/branchOffice/:idEmp', verificaToken, (req, res) => {
 app.get('/branchOffice/suc/:idSuc', verificaToken, (req, res) => {
     let id = req.params.idSuc;
 
-    BranchOffice.find({ _id: ObjectId(id), status: true }) //Lo que esta dentro de apostrofe son campos a mostrar
+    BranchOffice.find({ _id: id, status: true }) //Lo que esta dentro de apostrofe son campos a mostrar
         .populate('business')
         .exec((err, branchOffice) => {
             if (err) {
