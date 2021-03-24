@@ -32,6 +32,7 @@ app.get('/branchOffice/:idEmp', verificaToken, (req, res) => {
 app.get('/branchOffice/suc/:idSuc', verificaToken, (req, res) => {
     let id = req.params.idSuc;
 
+    console.log(id);
     BranchOffice.find({ _id: id, status: true }) //Lo que esta dentro de apostrofe son campos a mostrar
         .populate('business')
         .exec((err, branchOffice) => {
@@ -42,6 +43,8 @@ app.get('/branchOffice/suc/:idSuc', verificaToken, (req, res) => {
                 });
             }
 
+            console.log(branchOffice);
+
             res.json({
                 ok: true,
                 branchOffice
@@ -51,7 +54,7 @@ app.get('/branchOffice/suc/:idSuc', verificaToken, (req, res) => {
 /*
     Buscar sucursal por nombre
 */
-app.get('/BranchOffice/search/:description', function(req, res) {
+app.get('/branchOffice/search/:description', verificaToken, function(req, res) {
 
     let descriptionB = req.params.description;
     let regex = new RegExp(descriptionB, 'i');

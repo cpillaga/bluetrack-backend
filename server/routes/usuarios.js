@@ -80,7 +80,7 @@ app.post('/user/login', function(req, res) {
     });
 });
 
-app.post('/user', function(req, res) {
+app.post('/user', verificaToken, function(req, res) {
     let body = req.body;
 
     let user = new User({

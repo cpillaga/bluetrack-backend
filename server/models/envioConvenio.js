@@ -16,14 +16,6 @@ let shippAgreementSchema = new Schema({
         type: Number,
         required: [true, 'El iva es obligatorio']
     },
-    descuento: {
-        type: Number,
-        required: [true, 'El descuento es obligatorio']
-    },
-    ice: {
-        type: Number,
-        required: [true, 'El ice es obligatorio']
-    },
     total: {
         type: Number,
         required: [true, 'El total es obligatorio']
@@ -34,7 +26,7 @@ let shippAgreementSchema = new Schema({
     },
     guide: {
         type: String,
-        required: [true, 'El número de guia es obligatorio']
+        required: [true, 'El número de guía es obligatorio']
     },
     type: {
         type: String,
@@ -48,7 +40,7 @@ let shippAgreementSchema = new Schema({
     carrier: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'El destinatario es obligatorio']
+        required: [true, 'El transportista es obligatorio']
     },
     branchOffice: {
         type: Schema.Types.ObjectId,
@@ -59,6 +51,11 @@ let shippAgreementSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Client',
         required: [true, 'El cliente es obligatorio']
+    },
+    receiver: {
+        type: Schema.Types.ObjectId,
+        ref: 'Receiver',
+        required: [true, 'El destinatario es obligatorio']
     }
 });
 

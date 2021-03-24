@@ -13,8 +13,7 @@ const { verificaToken } = require('../middlewares/autenticacion');
 app.use(cors({ origin: '*' }));
 
 app.get('/admin', verificaToken, function(req, res) {
-
-    Cliente.find({})
+    Admin.find({})
         .exec((err, admin) => {
             if (err) {
                 return res.status(400).json({

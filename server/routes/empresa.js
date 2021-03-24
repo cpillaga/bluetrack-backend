@@ -30,7 +30,7 @@ app.get('/business', verificaToken, (req, res) => {
 /*
     Buscar empresa por razonSocial
 */
-app.get('/business/search/:description', function(req, res) {
+app.get('/business/search/:description', verificaToken, function(req, res) {
 
     let descriptionB = req.params.description;
     let regex = new RegExp(descriptionB, 'i');

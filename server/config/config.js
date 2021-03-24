@@ -27,6 +27,3 @@ process.env.URLDB = urlDB;
 //=========================
 
 module.exports.SEED = 'firma-bluetrack';
-
-
-// mongodb+srv://pillaga:Siguencia@cluster0.ok4hq.mongodb.net/bluetrack?retryWrites=true

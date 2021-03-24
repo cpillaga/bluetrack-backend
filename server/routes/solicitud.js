@@ -10,7 +10,7 @@ const { verificaToken } = require('../middlewares/autenticacion');
 app.use(cors({ origin: '*' }));
 
 //Este metodo busca las solcitudes para una sucursal
-app.get('/request/sucursal/:idSuc', function(req, res) {
+app.get('/request/sucursal/:idSuc', verificaToken, function(req, res) {
     let idSuc = req.params.idSuc;
 
     Request.find({ branchOffice: idSuc })
@@ -37,7 +37,7 @@ app.get('/request/sucursal/:idSuc', function(req, res) {
         });
 });
 
-app.get('/request/cliente/:idCli', function(req, res) {
+app.get('/request/cliente/:idCli', verificaToken, function(req, res) {
     let idCli = req.params.idCli;
 
     Request.find({ client: idCli })
