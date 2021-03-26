@@ -16,7 +16,12 @@ app.get('/agreement/:idSuc', verificaToken, (req, res) => {
 
     Agreement.find({ branchOffice: id }) //Lo que esta dentro de apostrofe son campos a mostrar
         .populate('cantonOrigen')
-        .populate('cantonDestino')
+        .populate({
+            path: 'cantonDestino',
+            populate: {
+                path: 'province'
+            }
+        })
         .populate('client')
         .populate('branchOffice')
         .exec((err, agreement) => {
