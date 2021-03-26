@@ -86,7 +86,7 @@ app.post('/carrier', verificaToken, function(req, res) {
         role: body.role,
         phone: body.phone,
         address: body.address,
-        branchOffice: body.branchOffice
+        business: body.business
     });
 
     carrier.save((err, carrierDB) => {
