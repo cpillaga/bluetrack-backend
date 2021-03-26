@@ -12,7 +12,7 @@ const app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
 app.use(cors({ origin: '*' }));
 
-app.get('/operator/:idSuc', verificaToken, (req, res) => {
+app.get('/carrier/:idSuc', verificaToken, (req, res) => {
     let id = req.params.idSuc;
 
     Carrier.find({ business: id }) //Lo que esta dentro de apostrofe son campos a mostrar
