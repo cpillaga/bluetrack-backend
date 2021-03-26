@@ -6,23 +6,23 @@ const _ = require('underscore');
 const SEED = require('../config/config').SEED;
 const cors = require('cors');
 
-const User = require('../models/usuarios');
+const Operator = require('../models/operador');
 
 const app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
 app.use(cors({ origin: '*' }));
 
-app.get('/user/:idSuc', verificaToken, (req, res) => {
+app.get('/operator/:idSuc', verificaToken, (req, res) => {
     let id = req.params.idSuc;
 
-    User.find({ branchOffice: id }) //Lo que esta dentro de apostrofe son campos a mostrar
+    Operator.find({ branchOffice: id }) //Lo que esta dentro de apostrofe son campos a mostrar
         .populate({
             path: 'branchOffice',
             populate: {
                 path: 'business'
             }
         })
-        .exec((err, user) => {
+        .exec((err, operator) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -32,15 +32,15 @@ app.get('/user/:idSuc', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                user
+                operator
             });
         });
 });
 
-app.post('/user/login', function(req, res) {
+app.post('/operator/login', function(req, res) {
     let body = req.body;
 
-    User.findOne({ user: body.user, status: true }, (err, userDB) => {
+    Operator.findOne({ user: body.user, status: true }, (err, operatorDB) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -49,7 +49,7 @@ app.post('/user/login', function(req, res) {
             });
         }
 
-        if (!userDB) {
+        if (!operatorDB) {
             return res.status(400).json({
                 ok: false,
                 message: 'Credenciales incorrectas',
@@ -57,7 +57,7 @@ app.post('/user/login', function(req, res) {
             });
         }
 
-        if (!bcrypt.compareSync(body.password, userDB.password)) {
+        if (!bcrypt.compareSync(body.password, operatorDB.password)) {
             return res.status(400).json({
                 ok: false,
                 message: 'Credenciales incorrectas',
@@ -67,23 +67,23 @@ app.post('/user/login', function(req, res) {
 
         //Crear un token!!
 
-        userDB.password = null;
+        operatorDB.password = null;
 
-        var token = jwt.sign({ user: userDB }, SEED); //8 horas
+        var token = jwt.sign({ user: operatorDB }, SEED); //8 horas
 
         res.json({
             ok: true,
-            user: userDB,
+            operator: operatorDB,
             token: token
         });
 
     });
 });
 
-app.post('/user', verificaToken, function(req, res) {
+app.post('/operator', verificaToken, function(req, res) {
     let body = req.body;
 
-    let user = new User({
+    let operator = new Operator({
         name: body.name,
         email: body.email,
         user: body.user,
@@ -94,7 +94,7 @@ app.post('/user', verificaToken, function(req, res) {
         branchOffice: body.branchOffice
     });
 
-    user.save((err, userDB) => {
+    operator.save((err, operatorDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -102,16 +102,16 @@ app.post('/user', verificaToken, function(req, res) {
             });
         }
 
-        userDB.password = null;
+        operatorDB.password = null;
 
         res.json({
             ok: true,
-            user: userDB
+            operator: operatorDB
         });
     });
 });
 
-app.put('/user/:id', [verificaToken], function(req, res) {
+app.put('/operator/:id', [verificaToken], function(req, res) {
     let id = req.params.id;
 
     let body = _.pick(req.body, ['phone', 'address', 'role', 'password']);
@@ -120,7 +120,7 @@ app.put('/user/:id', [verificaToken], function(req, res) {
         body.password = bcrypt.hashSync(body.password, 10);
     }
 
-    User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, userDB) => {
+    Operator.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, operatorDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -128,17 +128,17 @@ app.put('/user/:id', [verificaToken], function(req, res) {
             });
         }
 
-        userDB.password = null;
+        operatorDB.password = null;
 
         res.json({
             ok: true,
-            user: userDB
+            operator: operatorDB
         });
     });
 });
 
 
-app.delete('/user/:id', verificaToken, function(req, res) {
+app.delete('/operator/:id', verificaToken, function(req, res) {
     let id = req.params.id;
 
     let cambiaEstado = {
@@ -146,7 +146,7 @@ app.delete('/user/:id', verificaToken, function(req, res) {
     };
 
     //  Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
-    User.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, userBorrado) => {
+    Operator.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, operatorBorrado) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -154,7 +154,7 @@ app.delete('/user/:id', verificaToken, function(req, res) {
             });
         }
 
-        if (!userBorrado) {
+        if (!operatorBorrado) {
             return res.status(400).json({
                 ok: false,
                 err: {
@@ -165,20 +165,20 @@ app.delete('/user/:id', verificaToken, function(req, res) {
 
         res.json({
             ok: true,
-            user: userBorrado
+            operator: operatorBorrado
         });
     });
 });
 
 
-app.delete('/user/habilitar/:id', verificaToken, function(req, res) {
+app.delete('/operator/habilitar/:id', verificaToken, function(req, res) {
     let id = req.params.id;
     let cambiaEstado = {
         status: true
     };
 
     //  Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
-    User.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, userBorrado) => {
+    Operator.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, operatorBorrado) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -186,7 +186,7 @@ app.delete('/user/habilitar/:id', verificaToken, function(req, res) {
             });
         }
 
-        if (!userBorrado) {
+        if (!operatorBorrado) {
             return res.status(400).json({
                 ok: false,
                 err: {
@@ -197,7 +197,7 @@ app.delete('/user/habilitar/:id', verificaToken, function(req, res) {
 
         res.json({
             ok: true,
-            user: userBorrado
+            operator: operatorBorrado
         });
     });
 });

@@ -3,7 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 let Schema = mongoose.Schema;
 
-let userSchema = new Schema({
+let carrierSchema = new Schema({
     name: {
         type: String,
         required: [true, 'El nombre es obligatoria']
@@ -37,13 +37,13 @@ let userSchema = new Schema({
         type: String,
         default: true
     },
-    branchOffice: {
+    business: {
         type: Schema.Types.ObjectId,
-        ref: 'BranchOffice',
-        required: [true, 'La sucursal es obligatorio']
+        ref: 'Business',
+        required: [true, 'La empresa es obligatorio']
     }
 });
 
-userSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser unico' });
+carrierSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser unico' });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Carrier', carrierSchema);
