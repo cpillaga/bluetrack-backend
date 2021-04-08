@@ -14,7 +14,18 @@ app.get('/requestDetail/:idSol', function(req, res) {
     let idSol = req.params.idSol;
 
     RequestDetail.find({ request: idSol })
-        .populate('request')
+        .populate({
+            path: 'request',
+            populate: {
+                path: 'client'
+            }
+        })
+        .populate({
+            path: 'request',
+            populate: {
+                path: 'receiver'
+            }
+        })
         .exec((err, requestDetail) => {
             if (err) {
                 return res.status(400).json({

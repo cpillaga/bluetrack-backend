@@ -12,6 +12,9 @@ const app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
 app.use(cors({ origin: '*' }));
 
+/* 
+    Método para obtener todos los transportistas de una empresa
+*/
 app.get('/carrier/:idSuc', verificaToken, (req, res) => {
     let id = req.params.idSuc;
 
@@ -32,10 +35,33 @@ app.get('/carrier/:idSuc', verificaToken, (req, res) => {
         });
 });
 
+/* 
+    Método para obtener todos los transportistas disponibles de una empresa
+*/
+app.get('/carrier/disponible/:idSuc', verificaToken, (req, res) => {
+    let id = req.params.idSuc;
+
+    Carrier.find({ business: id, status: 'Disponible' }) //Lo que esta dentro de apostrofe son campos a mostrar
+        .populate('business')
+        .exec((err, carrier) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                carrier
+            });
+        });
+});
+
 app.post('/carrier/login', function(req, res) {
     let body = req.body;
 
-    Carrier.findOne({ user: body.user, status: true }, (err, carrierDB) => {
+    Carrier.findOne({ user: body.user }, (err, carrierDB) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -45,6 +71,14 @@ app.post('/carrier/login', function(req, res) {
         }
 
         if (!carrierDB) {
+            return res.status(400).json({
+                ok: false,
+                message: 'Credenciales incorrectas',
+                errors: err
+            });
+        }
+
+        if (carrierDB.status == 'Inactivo') {
             return res.status(400).json({
                 ok: false,
                 message: 'Credenciales incorrectas',
@@ -137,7 +171,7 @@ app.delete('/carrier/:id', verificaToken, function(req, res) {
     let id = req.params.id;
 
     let cambiaEstado = {
-        status: false
+        status: 'No disponible'
     };
 
     //  Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
@@ -166,10 +200,42 @@ app.delete('/carrier/:id', verificaToken, function(req, res) {
 });
 
 
+app.delete('/carrier/darbaja/:id', verificaToken, function(req, res) {
+    let id = req.params.id;
+
+    let cambiaEstado = {
+        status: 'Inactivo'
+    };
+
+    //  Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
+    Carrier.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, carrierBorrado) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!carrierBorrado) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Empresa no encontrada'
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            carrier: carrierBorrado
+        });
+    });
+});
+
 app.delete('/carrier/habilitar/:id', verificaToken, function(req, res) {
     let id = req.params.id;
     let cambiaEstado = {
-        status: true
+        status: 'Disponible'
     };
 
     //  Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {

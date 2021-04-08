@@ -35,7 +35,7 @@ let carrierSchema = new Schema({
     },
     status: {
         type: String,
-        default: true
+        default: 'Disponible'
     },
     business: {
         type: Schema.Types.ObjectId,
