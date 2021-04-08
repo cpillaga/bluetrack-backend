@@ -23,7 +23,10 @@ app.get('/requestDetail/:idSol', function(req, res) {
         .populate({
             path: 'request',
             populate: {
-                path: 'receiver'
+                path: 'receiver',
+                populate: {
+                    path: 'canton'
+                }
             }
         })
         .exec((err, requestDetail) => {
