@@ -34,6 +34,7 @@ app.get('/branchOffice/suc/:idSuc', verificaToken, (req, res) => {
 
     BranchOffice.find({ _id: id, status: true }) //Lo que esta dentro de apostrofe son campos a mostrar
         .populate('business')
+        .populate('canton')
         .exec((err, branchOffice) => {
             if (err) {
                 return res.status(400).json({
