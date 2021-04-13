@@ -37,6 +37,35 @@ app.get('/request/sucursal/:idSuc', verificaToken, function(req, res) {
         });
 });
 
+
+//Este metodo busca las solcitudes para una sucursal
+app.get('/request/sucursal/pendiente/:idSuc', verificaToken, function(req, res) {
+    let idSuc = req.params.idSuc;
+
+    Request.find({ branchOffice: idSuc, status: "Pendiente" })
+        .populate('branchOffice')
+        .populate('client')
+        .populate({
+            path: 'receiver',
+            populate: {
+                path: 'canton'
+            }
+        })
+        .exec((err, request) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                request
+            });
+        });
+});
+
 app.get('/request/cliente/:idCli', verificaToken, function(req, res) {
     let idCli = req.params.idCli;
 
