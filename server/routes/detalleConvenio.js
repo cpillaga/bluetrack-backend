@@ -15,7 +15,7 @@ app.get('/agreementDetail/:idSol', function(req, res) {
 
     AgreementDetail.find({ request: idSol })
         .populate({
-            path: 'request',
+            path: 'shippingAgreement',
             populate: {
                 path: 'client'
             }
@@ -53,7 +53,7 @@ app.post('/agreementDetail', verificaToken, function(req, res) {
         price: body.price,
         total: body.total,
         img: body.img,
-        request: body.request
+        shippingAgreement: body.shippingAgreement
     });
 
     agreementDetail.save((err, agreementDetailDB) => {

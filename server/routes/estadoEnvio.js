@@ -5,7 +5,7 @@ const _ = require('underscore');
 const SEED = require('../config/config').SEED;
 const cors = require('cors');
 
-const Status = require('../models/estado');
+const Status = require('../models/estadoEnvio');
 
 const app = express();
 const { verificaToken } = require('../middlewares/autenticacion');
