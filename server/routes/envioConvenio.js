@@ -68,7 +68,6 @@ app.get('/shippingAgreement/transEnt/:idTrans', verificaToken, function(req, res
         });
 });
 
-
 //Este metodo busca todos los envios de un cliente
 // app.get('/request/transEnt/:idClient', function(req, res) {
 //     let idClient = req.params.idClient;

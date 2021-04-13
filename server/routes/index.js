@@ -13,5 +13,8 @@ app.use(require('./convenio'));
 app.use(require('./destinatario'));
 app.use(require('./solicitud'));
 app.use(require('./detalleSolicitud'));
+app.use(require('./envioConvenio'));
+app.use(require('./detalleConvenio'));
+app.use(require('./estadoEnvio'));
 
 module.exports = app;

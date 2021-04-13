@@ -6,28 +6,30 @@ const uniqueValidator = require('mongoose-unique-validator');
 let Schema = mongoose.Schema;
 
 let agreeDetailSchema = new Schema({
+    description: {
+        type: String,
+        required: [true, 'La descripción es obligatoria']
+    },
     quantity: {
+        type: String,
+        required: [true, 'La cantidad es obligatoria']
+    },
+    price: {
         type: Number,
-        required: [true, 'La cantidad es obligatorio']
+        required: [true, 'El precio es obligatorio']
     },
     total: {
         type: Number,
         required: [true, 'El total es obligatorio']
     },
-    agreement: {
-        type: Schema.Types.ObjectId,
-        ref: 'Agreement',
-        required: [true, 'El código de convenio es obligatorio']
+    img: {
+        type: String,
+        required: [true, 'La imagen es obligatoria']
     },
     shippingAgreement: {
         type: Schema.Types.ObjectId,
         ref: 'ShippingAgreement',
-        required: [true, 'El envío convenio es obligatorio']
-    },
-    receiver: {
-        type: Schema.Types.ObjectId,
-        ref: 'Receiver',
-        required: [true, 'El destinatario es obligatorio']
+        required: [true, 'La solicitud es obligatoria']
     }
 });
 
