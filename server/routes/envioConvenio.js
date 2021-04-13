@@ -9,6 +9,38 @@ const { verificaToken } = require('../middlewares/autenticacion');
 
 app.use(cors({ origin: '*' }));
 
+/* 
+    Este metodo obtiene todos los envios de una sucursal
+*/
+app.get('/shippingAgreement/todos/:idSuc', verificaToken, function(req, res) {
+    let idSuc = req.params.idSuc;
+
+    ShippingAgreement.find({ branchOffice: idSuc })
+        .populate('branchOffice')
+        .populate('client')
+        .populate('carrier')
+        .populate({
+            path: 'receiver',
+            populate: {
+                path: 'canton'
+            }
+        })
+        .exec((err, shippingAgreement) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                shippingAgreement
+            });
+        });
+});
+
+
 //Este metodo busca los envios pendientes de un transportista
 app.get('/shippingAgreement/transPend/:idTrans', verificaToken, function(req, res) {
     let idTrans = req.params.idTrans;
