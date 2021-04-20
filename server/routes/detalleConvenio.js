@@ -13,7 +13,7 @@ app.use(cors({ origin: '*' }));
 app.get('/agreementDetail/:idSol', function(req, res) {
     let idSol = req.params.idSol;
 
-    AgreementDetail.find({ request: idSol })
+    AgreementDetail.find({ shippingAgreement: idSol })
         .populate({
             path: 'shippingAgreement',
             populate: {
