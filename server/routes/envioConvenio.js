@@ -162,4 +162,38 @@ app.post('/shippingAgreement', verificaToken, function(req, res) {
     });
 });
 
+
+app.delete('/shippingAgreement/:id/:estado', verificaToken, function(req, res) {
+    let id = req.params.id;
+    let estado = req.params.estado;
+
+    let cambiaEstado = {
+        status: estado
+    };
+
+    //  Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
+    ShippingAgreement.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, shippingAgreementBorrado) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!shippingAgreementBorrado) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Solicitud no encontrada'
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            shippingAgreement: shippingAgreementBorrado
+        });
+    });
+});
+
 module.exports = app;
