@@ -21,7 +21,7 @@ app.get('/agreementDetail/:idSol', function(req, res) {
             }
         })
         .populate({
-            path: 'request',
+            path: 'shippingAgreement',
             populate: {
                 path: 'receiver',
                 populate: {
