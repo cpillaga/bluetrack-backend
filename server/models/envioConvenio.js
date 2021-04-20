@@ -39,7 +39,7 @@ let shippAgreementSchema = new Schema({
     },
     carrier: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Carrier',
         required: [true, 'El transportista es obligatorio']
     },
     branchOffice: {
