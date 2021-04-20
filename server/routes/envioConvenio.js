@@ -42,10 +42,11 @@ app.get('/shippingAgreement/todos/:idSuc', verificaToken, function(req, res) {
 
 
 //Este metodo busca los envios pendientes de un transportista
-app.get('/shippingAgreement/transPend/:idTrans', verificaToken, function(req, res) {
+app.get('/shippingAgreement/transPend/:idTrans/:estado', verificaToken, function(req, res) {
     let idTrans = req.params.idTrans;
+    let estado = req.params.estado;
 
-    ShippingAgreement.find({ carrier: idTrans, status: 'Pendiente' })
+    ShippingAgreement.find({ carrier: idTrans, status: estado })
         .populate('branchOffice')
         .populate('client')
         .populate('carrier')
