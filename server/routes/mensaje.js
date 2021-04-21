@@ -11,6 +11,9 @@ const configMensaje = require('../middlewares/configMensaje');
 app.use(cors({ origin: '*' }));
 
 app.post('/mensaje', verificaToken, (req, res) => {
+    console.log("Mensajeeee");
+    console.log(req.body);
+    console.log("--------------");
     configMensaje(req.body);
     res.status(200).send();
 });
