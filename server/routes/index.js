@@ -16,5 +16,6 @@ app.use(require('./detalleSolicitud'));
 app.use(require('./envioConvenio'));
 app.use(require('./detalleConvenio'));
 app.use(require('./estadoEnvio'));
+app.use(require('./mensaje'));
 
 module.exports = app;
