@@ -37,6 +37,10 @@ let shippAgreementSchema = new Schema({
         unique: true,
         required: [true, 'El número de rastreo es obligatorio']
     },
+    img: {
+        type: String,
+        require: false
+    },
     carrier: {
         type: Schema.Types.ObjectId,
         ref: 'Carrier',

@@ -142,6 +142,7 @@ app.post('/shippingAgreement', verificaToken, function(req, res) {
         guide: body.guide,
         type: body.type,
         tracking: body.tracking,
+        img: body.img,
         carrier: body.carrier,
         client: body.client,
         branchOffice: body.branchOffice,
