@@ -127,8 +127,7 @@ app.get('/shippingAgreement/rastreo/:idClient/:rastreo', verificaToken, function
                 });
             }
 
-            console.log("id envio: " + shippingAgreementBD[0]._id);
-            Status.find({ shippingAgreement: shippingAgreementBD._id })
+            Status.find({ shippingAgreement: shippingAgreementBD[0]._id })
                 .populate('shippingAgreement')
                 .sort({ date: -1 })
                 .exec((err, statusDB) => {
