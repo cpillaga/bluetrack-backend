@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const ShippingAgreement = require('../models/envioConvenio');
+const Status = require('../models/estadoEnvio');
 
 const app = express();
 
@@ -126,28 +127,28 @@ app.get('/shippingAgreement/rastreo/:idClient/:rastreo', verificaToken, function
                 });
             }
 
-            // Status.find({ shippingAgreement: shippingAgreementBD._id })
-            //     .populate('shippingAgreement')
-            //     .sort({ date: -1 })
-            //     .exec((err, statusDB) => {
-            //         if (err) {
-            //             return res.status(400).json({
-            //                 ok: false,
-            //                 err
-            //             });
-            //         }
+            Status.find({ shippingAgreement: shippingAgreementBD._id })
+                .populate('shippingAgreement')
+                .sort({ date: -1 })
+                .exec((err, statusDB) => {
+                    if (err) {
+                        return res.status(400).json({
+                            ok: false,
+                            err
+                        });
+                    }
 
-            //         res.json({
-            //             ok: true,
-            //             shippingAgreement: shippingAgreementBD,
-            //             status: statusDB
-            //         });
-            //     });
+                    res.json({
+                        ok: true,
+                        shippingAgreement: shippingAgreementBD,
+                        status: statusDB
+                    });
+                });
 
-            res.json({
-                ok: true,
-                shippingAgreement: shippingAgreementBD
-            });
+            // res.json({
+            //     ok: true,
+            //     shippingAgreement: shippingAgreementBD
+            // });
         });
 });
 
