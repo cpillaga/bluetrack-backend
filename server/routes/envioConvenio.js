@@ -126,24 +126,28 @@ app.get('/shippingAgreement/rastreo/:idClient/:rastreo', verificaToken, function
                 });
             }
 
-            Status.find({ shippingAgreement: shippingAgreementBD._id })
-                .populate('shippingAgreement')
-                .sort({ date: -1 })
-                .exec((err, statusDB) => {
-                    if (err) {
-                        return res.status(400).json({
-                            ok: false,
-                            err
-                        });
-                    }
+            // Status.find({ shippingAgreement: shippingAgreementBD._id })
+            //     .populate('shippingAgreement')
+            //     .sort({ date: -1 })
+            //     .exec((err, statusDB) => {
+            //         if (err) {
+            //             return res.status(400).json({
+            //                 ok: false,
+            //                 err
+            //             });
+            //         }
 
-                    res.json({
-                        ok: true,
-                        shippingAgreement: shippingAgreementBD,
-                        status: statusDB
-                    });
-                });
+            //         res.json({
+            //             ok: true,
+            //             shippingAgreement: shippingAgreementBD,
+            //             status: statusDB
+            //         });
+            //     });
 
+            res.json({
+                ok: true,
+                shippingAgreement: shippingAgreementBD
+            });
         });
 });
 
