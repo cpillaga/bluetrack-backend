@@ -59,6 +59,7 @@ app.get('/status/search/:id', verificaToken, function(req, res) {
         });
 });
 
+
 app.post('/status', verificaToken, function(req, res) {
     let body = req.body;
 

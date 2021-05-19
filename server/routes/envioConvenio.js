@@ -101,8 +101,54 @@ app.get('/shippingAgreement/transEnt/:idTrans', verificaToken, function(req, res
         });
 });
 
+
+
+//Este metodo busca envios entregados de un transportista
+app.get('/shippingAgreement/rastreo/:idClient/:rastreo', verificaToken, function(req, res) {
+    let idClient = req.params.idClient;
+    let rastreo = req.params.rastreo;
+
+    ShippingAgreement.find({ client: idClient, tracking: rastreo })
+        .populate('branchOffice')
+        .populate('client')
+        .populate('carrier')
+        .populate({
+            path: 'receiver',
+            populate: {
+                path: 'canton'
+            }
+        })
+        .exec((err, shippingAgreementBD) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            Status.find({ shippingAgreement: id })
+                .populate('shippingAgreement')
+                .sort({ date: -1 })
+                .exec((err, statusDB) => {
+                    if (err) {
+                        return res.status(400).json({
+                            ok: false,
+                            err
+                        });
+                    }
+
+                    res.json({
+                        ok: true,
+                        shippingAgreement: shippingAgreementBD,
+                        status: statusDB
+                    });
+                });
+
+        });
+});
+
 //Este metodo busca todos los envios de un cliente
-// app.get('/request/transEnt/:idClient', function(req, res) {
+// app.get('/request/historial/:idClient', function(req, res) {
 //     let idClient = req.params.idClient;
 
 //     ShippingAgreement.find({ client: idClient })
@@ -164,6 +210,26 @@ app.post('/shippingAgreement', verificaToken, function(req, res) {
     });
 });
 
+
+app.put('/shippingAgreement/:id', [verificaToken], function(req, res) {
+    let id = req.params.id;
+
+    let body = _.pick(req.body, ['img']);
+
+    ShippingAgreement.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, shippingAgreementDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok: true,
+            shippingAgreement: shippingAgreementDB
+        });
+    });
+});
 
 app.delete('/shippingAgreement/:id/:estado', verificaToken, function(req, res) {
     let id = req.params.id;

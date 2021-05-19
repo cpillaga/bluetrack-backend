@@ -25,5 +25,4 @@ process.env.URLDB = urlDB;
 //=========================
 //    Firma Token
 //=========================
-
 module.exports.SEED = 'firma-bluetrack';
