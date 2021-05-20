@@ -125,7 +125,16 @@ app.post('/carrier', verificaToken, function(req, res) {
         business: body.business
     });
 
+    console.log(carrier);
+
+
     carrier.save((err, carrierDB) => {
+
+        console.log(err);
+
+        console.log("Carrier");
+
+        console.log(carrierDB);
         if (err) {
             return res.status(400).json({
                 ok: false,
