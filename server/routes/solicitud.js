@@ -13,6 +13,7 @@ app.use(cors({ origin: '*' }));
 app.get('/request/sucursal/:idSuc', verificaToken, function(req, res) {
     let idSuc = req.params.idSuc;
 
+
     Request.find({ branchOffice: idSuc })
         .populate('branchOffice')
         .populate('client')
@@ -41,6 +42,8 @@ app.get('/request/sucursal/:idSuc', verificaToken, function(req, res) {
 //Este metodo busca las solcitudes para una sucursal
 app.get('/request/sucursal/pendiente/:idSuc', verificaToken, function(req, res) {
     let idSuc = req.params.idSuc;
+
+    console.log(new Date().toISOString());
 
     Request.find({ branchOffice: idSuc, status: "Pendiente" })
         .populate('branchOffice')
