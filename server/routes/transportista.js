@@ -61,8 +61,6 @@ app.get('/carrier/disponible/:idSuc', verificaToken, (req, res) => {
 app.post('/carrier/login', function(req, res) {
     let body = req.body;
 
-    console.log(body);
-
     Carrier.findOne({ user: body.user }, (err, carrierDB) => {
         if (err) {
             return res.status(500).json({
@@ -113,6 +111,8 @@ app.post('/carrier/login', function(req, res) {
 
 app.post('/carrier', verificaToken, function(req, res) {
     let body = req.body;
+
+    console.log(body);
 
     let carrier = new Carrier({
         name: body.name,
