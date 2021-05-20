@@ -43,8 +43,6 @@ app.get('/request/sucursal/:idSuc', verificaToken, function(req, res) {
 app.get('/request/sucursal/pendiente/:idSuc', verificaToken, function(req, res) {
     let idSuc = req.params.idSuc;
 
-    console.log(new Date().toISOString());
-
     Request.find({ branchOffice: idSuc, status: "Pendiente" })
         .populate('branchOffice')
         .populate('client')
