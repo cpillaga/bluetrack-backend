@@ -194,7 +194,7 @@ app.put('/agreement/:id', verificaToken, function(req, res) {
 
     let body = _.pick(req.body, ['description', 'client', 'price', 'canton', 'img']);
 
-    agreement.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, agreementDB) => {
+    Agreement.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, agreementDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
