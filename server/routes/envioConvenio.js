@@ -102,7 +102,35 @@ app.get('/shippingAgreement/transEnt/:idTrans', verificaToken, function(req, res
         });
 });
 
+app.get('/shippingAgreement/hoy/idSucursal', verificaToken, function(req, res) {
+    let idSuc = re.params.idSucursal;
 
+    console.log(new Date());
+
+    ShippingAgreement.find({ branchOffice: idSuc, "fecha": { "$gt": new Date() } })
+        .populate('branchOffice')
+        .populate('client')
+        .populate('carrier')
+        .populate({
+            path: 'receiver',
+            populate: {
+                path: 'canton'
+            }
+        })
+        .exec((err, shippingAgreementBD) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                shippingAgreement: shippingAgreementBD
+            });
+        });
+})
 
 //Este metodo busca envios entregados de un transportista
 app.get('/shippingAgreement/rastreo/:idClient/:rastreo', verificaToken, function(req, res) {
