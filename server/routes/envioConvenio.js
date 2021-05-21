@@ -116,7 +116,7 @@ app.get('/shippingAgreement/hoy/:idSucursal', verificaToken, function(req, res) 
     end = fecha + "T23:59:59Z";
 
 
-    ShippingAgreement.find({ branchOffice: idSuc, "fecha": { "$gte": start, "$lte": end } })
+    ShippingAgreement.find({ branchOffice: idSuc, date: { "$gte": start, "$lte": end } })
         .populate('branchOffice')
         .populate('client')
         .populate('carrier')
