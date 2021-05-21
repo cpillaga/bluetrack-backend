@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-
+const moment = require('moment')
 const ShippingAgreement = require('../models/envioConvenio');
 const Status = require('../models/estadoEnvio');
 
@@ -109,6 +109,8 @@ app.get('/shippingAgreement/hoy/:idSucursal', verificaToken, function(req, res) 
     // 2021-05-20T12:26:29.440+00:00
 
     fecha = moment().format('YYYY-MM-DD');
+
+    console.log("fecha: " + fecha);
 
     start = fecha + "T00:00:00Z";
     end = fecha + "T23:59:59Z";
