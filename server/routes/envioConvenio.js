@@ -105,9 +105,16 @@ app.get('/shippingAgreement/transEnt/:idTrans', verificaToken, function(req, res
 app.get('/shippingAgreement/hoy/:idSucursal', verificaToken, function(req, res) {
     let idSuc = req.params.idSucursal;
 
-    console.log(new Date());
+    // 2021-05-20T18:10:23.182Z
+    // 2021-05-20T12:26:29.440+00:00
 
-    ShippingAgreement.find({ branchOffice: idSuc, "fecha": { "$gt": new Date() } })
+    fecha = moment().format('YYYY-MM-DD');
+
+    start = fecha + "T00:00:00Z";
+    end = fecha + "T23:59:59Z";
+
+
+    ShippingAgreement.find({ branchOffice: idSuc, "fecha": { "$gte": start, "$lte": end } })
         .populate('branchOffice')
         .populate('client')
         .populate('carrier')
