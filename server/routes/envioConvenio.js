@@ -102,7 +102,7 @@ app.get('/shippingAgreement/transEnt/:idTrans', verificaToken, function(req, res
         });
 });
 
-app.get('/shippingAgreement/hoy/idSucursal', verificaToken, function(req, res) {
+app.get('/shippingAgreement/hoy/:idSucursal', verificaToken, function(req, res) {
     let idSuc = re.params.idSucursal;
 
     console.log(new Date());
