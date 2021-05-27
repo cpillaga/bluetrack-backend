@@ -4,13 +4,22 @@ module.exports = (formulario) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'bluetrackgpsdeveloper@gmail.com', // Cambialo por tu email
-            pass: 'bluetrack2550100' // Cambialo por tu password
+            user: 'pillaga4173@gmail.com', // Cambialo por tu email
+            pass: 'Siguencia' // Cambialo por tu password
         }
     });
 
+    // var transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: 'bluetrackgpsdeveloper@gmail.com', // Cambialo por tu email
+    //         pass: 'bluetrack2550100' // Cambialo por tu password
+    //     }
+    // });
+
+
     const mailOptions = {
-        from: `”Bluetrack” <info@bluetrackgps.com>`,
+        from: `”Bluetrack 👻” <pillaga4173@gmail.com>`,
         to: 'christian_pillaga_s@hotmail.es', // Cambia esta parte por el destinatario
         // to: `${formulario.destinatario}`, // Cambia esta parte por el destinatario
         subject: formulario.asunto,
@@ -25,4 +34,4 @@ module.exports = (formulario) => {
         else
             console.log(info);
     });
-};
+}
