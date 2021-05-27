@@ -152,8 +152,6 @@ app.put('/client/password/:idClient', verificaToken, function(req, res) {
     let idClient = req.params.idClient;
     let body = req.body;
 
-    console.log(body);
-
     Client.findOne({ _id: idClient }, (err, clientDB) => {
         if (err) {
             return res.status(500).json({
@@ -172,9 +170,6 @@ app.put('/client/password/:idClient', verificaToken, function(req, res) {
         }
 
         let bodyNew = _.pick(body, ['password']);
-
-        console.log("Entrar bodyNew");
-        console.log(bodyNew);
 
         if (bodyNew.password != null) {
             bodyNew.password = bcrypt.hashSync(bodyNew.password, 10);
