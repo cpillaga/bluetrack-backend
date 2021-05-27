@@ -125,7 +125,7 @@ app.post('/client', function(req, res) {
 app.put('/client/:id', verificaToken, function(req, res) {
     let id = req.params.id;
 
-    let body = _.pick(req.body, ['ciRuc', 'name', 'address', 'phone', 'email', 'password', 'canton']);
+    let body = _.pick(req.body, ['ciRuc', 'name', 'address', 'phone', 'email']);
 
     if (body.password != null) {
         body.password = bcrypt.hashSync(body.password, 10);
@@ -148,4 +148,50 @@ app.put('/client/:id', verificaToken, function(req, res) {
     });
 });
 
+app.put('/client/password/:idClient', verificaToken, function(req, res) {
+    let idClient = req.params.idClient;
+    let bodyNew = req.body;
+
+    Client.findOne({ _id: idClient }, (err, clientDB) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                message: 'Error al buscar Cliente',
+                errors: err
+            });
+        }
+
+        if (!bcrypt.compareSync(bodyNew.passwordAnt, clientDB.password)) {
+            return res.status(400).json({
+                ok: false,
+                message: 'Contraseñas no coinciden',
+                errors: err
+            });
+        }
+
+        let body = _.pick(req.body, ['password']);
+
+        if (body.password != null) {
+            body.password = bcrypt.hashSync(body.password, 10);
+        }
+
+        Client.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, clientDB) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            clientDB.password = null;
+
+            res.json({
+                ok: true,
+                client: clientDB
+            });
+        });
+
+    });
+
+});
 module.exports = app;
