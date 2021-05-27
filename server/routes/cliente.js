@@ -150,7 +150,7 @@ app.put('/client/:id', verificaToken, function(req, res) {
 
 app.put('/client/password/:idClient', verificaToken, function(req, res) {
     let idClient = req.params.idClient;
-    let bodyNew = req.body;
+    let body = req.body;
 
     Client.findOne({ _id: idClient }, (err, clientDB) => {
         if (err) {
@@ -161,7 +161,7 @@ app.put('/client/password/:idClient', verificaToken, function(req, res) {
             });
         }
 
-        if (!bcrypt.compareSync(bodyNew.passwordAnt, clientDB.password)) {
+        if (!bcrypt.compareSync(body.passwordAnt, clientDB.password)) {
             return res.status(400).json({
                 ok: false,
                 message: 'Contraseñas no coinciden',
@@ -169,13 +169,13 @@ app.put('/client/password/:idClient', verificaToken, function(req, res) {
             });
         }
 
-        let body = _.pick(req.body, ['password']);
+        let bodyNew = _.pick(body, ['password']);
 
-        if (body.password != null) {
-            body.password = bcrypt.hashSync(body.password, 10);
+        if (bodyNew.password != null) {
+            bodyNew.password = bcrypt.hashSync(bodyNew.password, 10);
         }
 
-        Client.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, clientDB) => {
+        Client.findByIdAndUpdate(id, bodyNew, { new: true, runValidators: true }, (err, clientDB) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
