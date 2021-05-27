@@ -180,7 +180,7 @@ app.put('/client/password/:idClient', verificaToken, function(req, res) {
             bodyNew.password = bcrypt.hashSync(bodyNew.password, 10);
         }
 
-        Client.findByIdAndUpdate(id, bodyNew, { new: true, runValidators: true }, (err, clientDB) => {
+        Client.findByIdAndUpdate(idClient, bodyNew, { new: true, runValidators: true }, (err, clientDB) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
