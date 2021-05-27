@@ -19,6 +19,8 @@ module.exports = (formulario) => {
         `
     };
 
+    console.log("Enviando mensaje");
+
     transporter.sendMail(mailOptions, function(err, info) {
         if (err)
             console.log(err);
