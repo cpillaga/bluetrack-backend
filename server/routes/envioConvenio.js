@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const moment = require('moment')
+const moment = require('moment');
 const ShippingAgreement = require('../models/envioConvenio');
 const Status = require('../models/estadoEnvio');
 
@@ -139,7 +139,7 @@ app.get('/shippingAgreement/hoy/:idSucursal', verificaToken, function(req, res) 
                 shippingAgreement: shippingAgreementBD
             });
         });
-})
+});
 
 //Este metodo busca envios entregados de un transportista
 app.get('/shippingAgreement/rastreo/:idClient/:rastreo', verificaToken, function(req, res) {
