@@ -1,24 +1,16 @@
 const nodemailer = require('nodemailer');
 
 module.exports = (formulario) => {
-    // var transporter = nodemailer.createTransport({
-    //     service: 'gmail',
-    //     auth: {
-    //         user: 'pillaga4173@gmail.com', // Cambialo por tu email
-    //         pass: 'Siguencia' // Cambialo por tu password
-    //     }
-    // });
-
-    let transporter = nodemailer.createTransport({
-        service: 'SendPulse', // no need to set host or port etc.
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
         auth: {
-            user: 'info@physeter.net',
-            pass: 'Physeter3.0'
+            user: 'bluetrackgpsdeveloper@gmail.com', // Cambialo por tu email
+            pass: 'bluetrack2550100' // Cambialo por tu password
         }
     });
 
     const mailOptions = {
-        from: `”Bluetrack 👻” <info@physeter.net>`,
+        from: `Bluetrack <info@bluetrackgps.com>`,
         to: 'christian_pillaga_s@hotmail.es', // Cambia esta parte por el destinatario
         // to: `${formulario.destinatario}`, // Cambia esta parte por el destinatario
         subject: formulario.asunto,
