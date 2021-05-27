@@ -12,7 +12,7 @@ module.exports = (formulario) => {
     let transporter = nodemailer.createTransport({
         service: 'SendPulse', // no need to set host or port etc.
         auth: {
-            user: 'info@physeter,net',
+            user: 'info@physeter.net',
             pass: 'Physeter3.0'
         }
     });
