@@ -190,33 +190,33 @@ app.get('/shippingAgreement/rastreo/:idClient/:rastreo', verificaToken, function
 });
 
 //Este metodo busca todos los envios de un cliente
-// app.get('/request/historial/:idClient', function(req, res) {
-//     let idClient = req.params.idClient;
+app.get('/request/historial/:idClient', function(req, res) {
+    let idClient = req.params.idClient;
 
-//     ShippingAgreement.find({ client: idClient })
-//         .populate('branchOffice')
-//         .populate('client')
-//         .populate('carrier')
-//         .populate({
-//             path: 'receiver',
-//             populate: {
-//                 path: 'canton'
-//             }
-//         })
-//         .exec((err, shippingAgreement) => {
-//             if (err) {
-//                 return res.status(400).json({
-//                     ok: false,
-//                     err
-//                 });
-//             }
+    ShippingAgreement.find({ client: idClient })
+        .populate('branchOffice')
+        .populate('client')
+        .populate('carrier')
+        .populate({
+            path: 'receiver',
+            populate: {
+                path: 'canton'
+            }
+        })
+        .exec((err, shippingAgreement) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
 
-//             res.json({
-//                 ok: true,
-//                 shippingAgreement
-//             });
-//         });
-// });
+            res.json({
+                ok: true,
+                shippingAgreement
+            });
+        });
+});
 
 app.post('/shippingAgreement', verificaToken, function(req, res) {
     let body = req.body;
