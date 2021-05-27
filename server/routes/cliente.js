@@ -146,10 +146,6 @@ app.put('/client/:id', verificaToken, function(req, res) {
 
     let body = _.pick(req.body, ['ciRuc', 'name', 'address', 'phone', 'email']);
 
-    if (body.password != null) {
-        body.password = bcrypt.hashSync(body.password, 10);
-    }
-
     Client.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, clientDB) => {
         if (err) {
             return res.status(400).json({
