@@ -73,6 +73,25 @@ app.get('/client', verificaToken, function(req, res) {
         });
 });
 
+app.get('/client/id/:idClient', verificaToken, function(req, res) {
+    let idClient = req.params.idClient;
+
+    Client.findOne({ _id: idClient }, (err, client) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok: true,
+            client
+        });
+    });
+});
+
+
 app.get('/client/searchMail/:mail', verificaToken, function(req, res) {
     let mail = req.params.mail;
 
