@@ -10,7 +10,7 @@ module.exports = (formulario) => {
     });
 
     const mailOptions = {
-        from: `Bluetrack <info@bluetrackgps.com>`,
+        from: `”Bluetrack” <info@bluetrackgps.com>`,
         to: 'christian_pillaga_s@hotmail.es', // Cambia esta parte por el destinatario
         // to: `${formulario.destinatario}`, // Cambia esta parte por el destinatario
         subject: formulario.asunto,
